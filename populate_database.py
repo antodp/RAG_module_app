@@ -1,11 +1,11 @@
 import argparse
 import os
 import shutil
-from langchain.document_loaders.pdf import PyPDFDirectoryLoader
+from langchain.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
 from get_embedding_function import get_embedding_function
-from langchain.vectorstores.chroma import Chroma
+from langchain.vectorstores import Chroma
 
 
 CHROMA_PATH = "chroma"
@@ -24,6 +24,7 @@ def main():
 
     # Create (or update) the data store.
     documents = load_documents()
+    # print(documents[0]) ## logging for a check
     chunks = split_documents(documents)
     add_to_chroma(chunks)
 
@@ -35,8 +36,8 @@ def load_documents():
 
 def split_documents(documents: list[Document]):
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800,
-        chunk_overlap=80,
+        chunk_size=1200,
+        chunk_overlap=300,
         length_function=len,
         is_separator_regex=False,
     )
@@ -44,6 +45,12 @@ def split_documents(documents: list[Document]):
 
 
 def add_to_chroma(chunks: list[Document]):
+    # Clear the database to ensure updates always apply
+    if os.path.exists(CHROMA_PATH):
+        print("Clearing ChromaDB to populate anew")
+        shutil.rmtree(CHROMA_PATH) # Deletes old db
+
+
     # Load the existing database.
     db = Chroma(
         persist_directory=CHROMA_PATH, embedding_function=get_embedding_function()
