@@ -3,6 +3,7 @@ import os
 import shutil
 from langchain.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_text_splitters import MarkdownHeaderTextSplitter
 from langchain.schema.document import Document
 from get_embedding_function import get_embedding_function
 from langchain.vectorstores import Chroma
@@ -26,6 +27,9 @@ def main():
     documents = load_documents()
     # print(documents[0]) ## logging for a check
     chunks = split_documents(documents)
+    ## Logging for checks
+    print(chunks[0].page_content)
+    print("Adding chunks to Chroma...")
     add_to_chroma(chunks)
 
 
@@ -36,7 +40,7 @@ def load_documents():
 
 def split_documents(documents: list[Document]):
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1200,
+        chunk_size=1500,
         chunk_overlap=300,
         length_function=len,
         is_separator_regex=False,
