@@ -4,7 +4,7 @@ import shutil
 import re
 from langchain.document_loaders import PyPDFDirectoryLoader
 from langchain.schema.document import Document
-from get_embedding_function import get_embedding_function
+from src.rag_app.get_embedding_function import get_embedding_function
 from langchain.vectorstores import Chroma
 
 CHROMA_PATH = "chroma"

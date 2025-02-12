@@ -2,7 +2,7 @@ import argparse
 from langchain.vectorstores import Chroma
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms.ollama import Ollama
-from get_embedding_function import get_embedding_function
+from src.rag_app.get_embedding_function import get_embedding_function
 
 CHROMA_PATH = "chroma"
 
