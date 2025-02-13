@@ -5,3 +5,5 @@ chroma
 venv/
 .venv/
 rag_env/
+old/
+.old/
