@@ -8,3 +8,4 @@ rag_env/
 old/
 .old/
 **/.DS_Store
+*.env
