@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List
 from langchain.prompts import ChatPromptTemplate
 from langchain_aws import ChatBedrock
-from get_chroma_db import get_chroma_db
+from rag_app.get_chroma_db import get_chroma_db
 
 # Generalized Prompt (No Regulatory-Specific Language)
 PROMPT_TEMPLATE = """
@@ -15,10 +15,7 @@ If the answer cannot be found in the retrieved context, respond with: "I don't k
 
 Frame your response clearly and concisely, ensuring it is structured and directly addresses the question.
 
-Do not infer additional information beyond what is provided in the context. 
-
-
-At the end of the answer, list the key references used to generate the response, IF available.
+Do not infer additional information beyond what is provided in the context.
 
 ---
 **Question:** {question}
