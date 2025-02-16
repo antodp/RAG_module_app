@@ -1,7 +1,7 @@
 *.pyc
 .DS_Store
 backup
-chroma
+**/chroma
 venv/
 .venv/
 rag_env/

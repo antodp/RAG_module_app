@@ -9,8 +9,8 @@ from langchain.vectorstores.chroma import Chroma
 from src.rag_app.get_embedding_function import get_embedding_function
 
 
-CHROMA_PATH = "chroma"
-DATA_SOURCE_PATH = "data"
+CHROMA_PATH = "src/data/chroma"
+DATA_SOURCE_PATH = "src/data/source"
 
 
 def main():
@@ -35,6 +35,7 @@ def load_documents():
 
 
 def split_documents(documents: list[Document]):
+    print(str(len(documents)))
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=600,
         chunk_overlap=120,
