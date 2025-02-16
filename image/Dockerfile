@@ -13,7 +13,7 @@ RUN pip install -r requirements.txt --upgrade
 EXPOSE 8000
 
 # set IS_USING_IMAGE_RUNTIME Environment variable
-ENV IS_USING_IMAGE_RUNTIME = True
+ENV IS_USING_IMAGE_RUNTIME=True
 
 # copy all files in ./src
 COPY src/* ${LAMBDA_TASK_ROOT}

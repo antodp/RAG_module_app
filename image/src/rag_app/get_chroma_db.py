@@ -5,7 +5,7 @@ import shutil
 import sys
 import os
 
-CHROMA_PATH = "src/data/chroma"
+CHROMA_PATH = os.environ.get("CHROMA_PATH", "data/chroma")
 IS_USING_IMAGE_RUNTIME = bool(os.environ.get("IS_USING_IMAGE_RUNTIME", False))
 CHROMA_DB_INSTANCE = None  # Reference to singleton instance of ChromaDB
 
@@ -51,4 +51,4 @@ def get_runtime_chroma_path():
     if IS_USING_IMAGE_RUNTIME:
         return f"/tmp/{CHROMA_PATH}"
     else:
-        return CHROMA_PATH
+        return "src/"+CHROMA_PATH
