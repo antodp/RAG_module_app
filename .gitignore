@@ -1,6 +1,7 @@
 *.pyc
 .DS_Store
 backup
+backup_data
 **/chroma
 venv/
 .venv/

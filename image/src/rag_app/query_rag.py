@@ -56,4 +56,4 @@ def query_rag(query_text: str) -> QueryResponse:
 
 
 if __name__ == "__main__":
-    query_rag("What percentage of people affected by LFH suffer from macrodactyly? Also, in what race does it occur more often?")
+    query_rag("How does ACME industrial solutions handle third-party access management?")
