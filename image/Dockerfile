@@ -7,7 +7,7 @@ COPY requirements.txt ${LAMBDA_TASK_ROOT}
 RUN pip install pysqlite3-binary
 
 # install the specified packages
-RUN pip install -r requirements.txt --upgrade
+RUN pip install --no-cache-dir -r requirements.txt
 
 # for local testing
 EXPOSE 8000
