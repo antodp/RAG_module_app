@@ -30,6 +30,27 @@ export class RagCdkInfraStack extends cdk.Stack {
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
+    // Lambda function (image) to handle the worker logic (run RAG/AI model)
+    const workerImageCode = cdk.aws_lambda.DockerImageCode.fromImageAsset("../image", {
+      cmd: ["app_work_handler.handler"],
+      platform: cdk.aws_ecr_assets.Platform.LINUX_AMD64,
+      file: "Dockerfile",
+      buildArgs: {
+        provenance: "false",
+        sbom: "false",
+      },
+    });
+
+    const workerFunction = new cdk.aws_lambda.DockerImageFunction(this, "RagWorkerFunction", {
+      code: workerImageCode,
+      memorySize: 512,
+      timeout: cdk.Duration.seconds(60),
+      architecture: Architecture.X86_64,
+      environment: {
+        DOCKER_DEFAULT_PLATFORM: "linux/amd64",
+        TABLE_NAME: ragQueryTable.tableName,
+      },
+    });
 
     // Function to handle the API requests. Uses same base image, but different handler.
     const apiImageCode = cdk.aws_lambda.DockerImageCode.fromImageAsset("../image", {
@@ -41,6 +62,7 @@ export class RagCdkInfraStack extends cdk.Stack {
         sbom: "false",
       },
     });
+
     const apiFunction = new cdk.aws_lambda.DockerImageFunction(this, "ApiFunc", {
       code: apiImageCode,
       memorySize: 256,
@@ -49,12 +71,15 @@ export class RagCdkInfraStack extends cdk.Stack {
       environment: {
         DOCKER_DEFAULT_PLATFORM: "linux/amd64",
         TABLE_NAME: ragQueryTable.tableName,
+        WORKER_LAMBDA_NAME: workerFunction.functionName,
       },
     });
 
     // Grant permissions for all resources to work together.
+    ragQueryTable.grantReadWriteData(workerFunction);
     ragQueryTable.grantReadWriteData(apiFunction);
-    apiFunction.role?.addManagedPolicy(
+    workerFunction.grantInvoke(apiFunction);
+    workerFunction.role?.addManagedPolicy(
       ManagedPolicy.fromAwsManagedPolicyName("AmazonBedrockFullAccess")
     );
 
