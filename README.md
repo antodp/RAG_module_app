@@ -74,7 +74,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "query_text": "How does ACME's policy comply with access management security?"
+  "query_text": "How does the ACME policy comply with access management security?"
 }'
 ```
 
@@ -138,7 +138,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "query_text": "How does ACME's policy comply with access management security?"
+  "query_text": "How does the ACME policy comply with access management security?"
 }'
 ```
 
