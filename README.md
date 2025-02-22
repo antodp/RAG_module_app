@@ -23,7 +23,7 @@ The data sources used for example purpose are ISO 27001 standard, NIS2 regulatio
 Ensure you have:
 
 An **AWS account** and **AWS CLI** installed.  
-AWS CDK **bootstrapped** (`cdk bootstrap`).  
+AWS IAM user with appropriate permissions and policies.
 **Amazon Bedrock access** enabled in your region.  
 
 ### 2. Set Up Environment Variables
@@ -122,6 +122,7 @@ npm install
 ### 2. Deploy to AWS
 
 ```bash
+cdk bootstrap
 cdk deploy
 ```
 
